@@ -1,16 +1,16 @@
 package ru.denzol.springcourse;
 
-public class ClassicalMusic implements Music{
-    public void doMyInit() {
-        System.out.println("Init: " + this.getClass().getSimpleName());
-    }
+import org.springframework.stereotype.Component;
 
-    public void doMyDestroy() {
-        System.out.println("Destroy: " + this.getClass().getSimpleName());
-    }
+import java.util.Arrays;
+import java.util.List;
+
+@Component
+public class ClassicalMusic implements Music {
+    List<String> songs = Arrays.asList("Classic song 1", "Classic song 2", "Classic song 3");
 
     @Override
-    public String getSong() {
-        return "Classic song";
+    public List<String> getSongs() {
+        return songs;
     }
 }

@@ -1,15 +1,16 @@
 package ru.denzol.springcourse;
 
-public class RapMusic implements Music{
-    public void doMyInit() {
-        System.out.println("Init: " + this.getClass().getSimpleName());
-    }
+import org.springframework.stereotype.Component;
 
-    public void doMyDestroy() {
-        System.out.println("Destroy: " + this.getClass().getSimpleName());
-    }
+import java.util.Arrays;
+import java.util.List;
+
+@Component
+public class RapMusic implements Music {
+    List<String> songs = Arrays.asList("Lost yourself", "In da club", "False alarm");
+
     @Override
-    public String getSong() {
-        return "Lost yourself";
+    public List<String> getSongs() {
+        return songs;
     }
 }

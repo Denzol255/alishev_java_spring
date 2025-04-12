@@ -1,50 +1,47 @@
 package ru.denzol.springcourse;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
+@Component
 public class MusicPlayer {
-    private List<Music> musicList = new ArrayList<>();
-    private int volume;
-    private String name;
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
+    ClassicalMusic classicalMusic;
+    RockMusic rockMusic;
+    RapMusic rapMusic;
+    @Value("${musicPlayer.name}")
+    String name;
+    @Value("${musicPlayer.volume}")
+    int volume;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getVolume() {
+        return volume;
     }
 
-    public MusicPlayer() {
-
+    @Autowired
+    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic, RapMusic rapMusic) {
+        this.classicalMusic = classicalMusic;
+        this.rockMusic = rockMusic;
+        this.rapMusic = rapMusic;
     }
 
-    public List<Music> getMusicList() {
-        return musicList;
-    }
-
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
-    }
-
-    public MusicPlayer(List<Music> musicList) {
-        this.musicList = musicList;
-    }
-
-    public void playMusic() {
-        String songs = this.getMusicList().stream().map(Music::getSong).collect(Collectors.joining(", "));
-        System.out.printf("%s %s playing: %s%n", this.getClass().getSimpleName(), this.getName(), songs);
-        System.out.printf("Volume %d%n", this.getVolume());
+    public void playMusic(MusicType musicType) {
+        Random random = new Random();
+        int songNumber = random.nextInt(3);
+        if (musicType.equals(MusicType.ROCK)) {
+            System.out.println("Playing: " + rockMusic.getSongs().get(songNumber));
+        }
+        if (musicType.equals(MusicType.RAP)) {
+            System.out.println("Playing: " + rapMusic.getSongs().get(songNumber));
+        }
+        if (musicType.equals(MusicType.CLASSICAL)) {
+            System.out.println("Playing: " + classicalMusic.getSongs().get(songNumber));
+        }
     }
 }
