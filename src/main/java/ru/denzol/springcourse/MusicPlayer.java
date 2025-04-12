@@ -1,16 +1,12 @@
 package ru.denzol.springcourse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Random;
 
-@Component
 public class MusicPlayer {
-    ClassicalMusic classicalMusic;
-    RockMusic rockMusic;
-    RapMusic rapMusic;
+    List<Music> musics;
     @Value("${musicPlayer.name}")
     String name;
     @Value("${musicPlayer.volume}")
@@ -24,24 +20,16 @@ public class MusicPlayer {
         return volume;
     }
 
-    @Autowired
-    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic, RapMusic rapMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
-        this.rapMusic = rapMusic;
+    public MusicPlayer(List<Music> musics) {
+        this.musics = musics;
     }
 
-    public void playMusic(MusicType musicType) {
+    public void playMusic() {
         Random random = new Random();
-        int songNumber = random.nextInt(3);
-        if (musicType.equals(MusicType.ROCK)) {
-            System.out.println("Playing: " + rockMusic.getSongs().get(songNumber));
-        }
-        if (musicType.equals(MusicType.RAP)) {
-            System.out.println("Playing: " + rapMusic.getSongs().get(songNumber));
-        }
-        if (musicType.equals(MusicType.CLASSICAL)) {
-            System.out.println("Playing: " + classicalMusic.getSongs().get(songNumber));
-        }
+        int musicTypeNumber = random.nextInt(MusicType.values().length);
+        Music music = musics.get(musicTypeNumber);
+        int songNumber = random.nextInt(music.getSongs().size());
+
+        System.out.println("Playing music type with number " + musicTypeNumber + " and song number " + songNumber + " - " + musics.get(musicTypeNumber).getSongs().get(songNumber));
     }
 }
