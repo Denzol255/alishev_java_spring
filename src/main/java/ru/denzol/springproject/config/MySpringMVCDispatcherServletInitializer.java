@@ -1,7 +1,10 @@
 package ru.denzol.springproject.config;
 
+import jakarta.servlet.descriptor.JspPropertyGroupDescriptor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import java.util.Collection;
 
 public class MySpringMVCDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -19,6 +22,5 @@ public class MySpringMVCDispatcherServletInitializer extends AbstractAnnotationC
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }
-
 
 }
